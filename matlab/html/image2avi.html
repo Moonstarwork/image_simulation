@@ -1,0 +1,260 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>image2avi</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-01-22"><meta name="DC.source" content="image2avi.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clc;
+clear <span class="string">all</span>;
+num=5;
+
+
+<span class="keyword">if</span> 1
+
+    vedio = VideoWriter(<span class="string">'../data/videos/demo.avi'</span>); <span class="comment">%&#21021;&#22987;&#21270;&#19968;&#20010;avi&#25991;&#20214;</span>
+    vedio.FrameRate = 50;
+    open(vedio);
+
+
+    <span class="keyword">for</span> i=1:num
+    image=load(strcat(<span class="string">'../data/trans_txt/'</span>,int2str(i),<span class="string">'.txt'</span>));
+
+    image=uint8(image);
+    imshow(image);
+    imwrite(image,strcat(<span class="string">'../data/trans_png/'</span>,int2str(i),<span class="string">'.png'</span>));
+     writeVideo(vedio,image);
+    disp(strcat(<span class="string">'fire'</span>,int2str(i),<span class="string">'&#20889;&#20837;&#35270;&#39057;.'</span>));
+    <span class="keyword">end</span>
+    close(vedio);
+
+<span class="keyword">end</span>
+
+
+
+
+<span class="keyword">if</span> 0
+<span class="keyword">for</span> i=1:num
+
+        image=imread(strcat(<span class="string">'../data/fire6/fire'</span>,int2str(i),<span class="string">'.bmp'</span>));
+        image=~image;
+
+        image_txt=strcat(<span class="string">'../data/m2c/m2c'</span>,int2str(i),<span class="string">'.txt'</span>);<span class="comment">%&#20026; txt &#25991;&#20214;&#21435;&#21517;&#23383;</span>
+        fid=fopen(image_txt,<span class="string">'w'</span>);
+        fprintf(fid,<span class="string">'%d '</span>,image);
+        fclose(fid);
+
+        <span class="comment">%imwrite(image,strcat('fire',int2str(i),'.jpg'));</span>
+        disp(strcat(<span class="string">'fire'</span>,int2str(i),<span class="string">'&#36716;&#25442;&#32467;&#26463;.'</span>));
+
+
+<span class="keyword">end</span>
+disp(<span class="string">'&#25209;&#37327;&#36716;&#25442;&#32467;&#26463;.'</span>);
+
+
+
+
+
+
+<span class="comment">%&#20197;&#19979;&#20026;&#36716;&#25442;&#25104;&#35270;&#39057;&#30340;&#20195;&#30721;</span>
+
+
+<span class="keyword">if</span> 0
+vedio = VideoWriter(<span class="string">'demo3.avi'</span>); <span class="comment">%&#21021;&#22987;&#21270;&#19968;&#20010;avi&#25991;&#20214;</span>
+vedio.FrameRate = 50;
+open(vedio);
+<span class="keyword">for</span> i=1:num <span class="comment">%&#22270;&#20687;&#24207;&#21015;&#20010;&#25968;</span>
+fname=strcat(<span class="string">'fire'</span>,num2str(i,<span class="string">'%d'</span>),<span class="string">'.jpg'</span>);
+frame = imread(fname);
+
+writeVideo(vedio,frame);
+disp(strcat(<span class="string">'fire'</span>,int2str(i),<span class="string">'&#20889;&#20837;&#35270;&#39057;.'</span>));
+
+<span class="keyword">end</span>
+close(vedio);
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+
+
+<span class="comment">%&#19968;&#19979;&#20026;&#22270;&#20687;&#22788;&#29702;&#21518;&#30340;&#35270;&#39057;&#21512;&#25104;</span>
+<span class="keyword">if</span> 0
+vedio = VideoWriter(<span class="string">'../data/videos/demo.avi'</span>); <span class="comment">%&#21021;&#22987;&#21270;&#19968;&#20010;avi&#25991;&#20214;</span>
+vedio.FrameRate = 50;
+open(vedio);
+
+<span class="keyword">for</span> i=1:num
+    image=load(strcat(<span class="string">'../data/c2m/c2m'</span>,int2str(i),<span class="string">'.txt'</span>));
+    image=uint8(image);
+    <span class="comment">%imshow(image);</span>
+    imwrite(image,strcat(<span class="string">'../data/jpg/'</span>,int2str(i),<span class="string">'.png'</span>));
+<span class="comment">%     fname=strcat('../data/jpg/',num2str(i,'%d'),'.png');</span>
+<span class="comment">%     frame = imread(fname);</span>
+    writeVideo(vedio,image);
+    disp(strcat(<span class="string">'fire'</span>,int2str(i),<span class="string">'&#20889;&#20837;&#35270;&#39057;.'</span>));
+<span class="keyword">end</span>
+close(vedio);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">fire1&#20889;&#20837;&#35270;&#39057;.
+fire2&#20889;&#20837;&#35270;&#39057;.
+fire3&#20889;&#20837;&#35270;&#39057;.
+fire4&#20889;&#20837;&#35270;&#39057;.
+fire5&#20889;&#20837;&#35270;&#39057;.
+</pre><img vspace="5" hspace="5" src="image2avi_01.png" style="width:469px;height:330px;" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+clc;
+clear all;
+num=5;
+
+
+if 1
+    
+    vedio = VideoWriter('../data/videos/demo.avi'); %初始化一个avi文件 
+    vedio.FrameRate = 50;
+    open(vedio); 
+
+    
+    for i=1:num
+    image=load(strcat('../data/trans_txt/',int2str(i),'.txt')); 
+    
+    image=uint8(image);
+    imshow(image);
+    imwrite(image,strcat('../data/trans_png/',int2str(i),'.png'));
+     writeVideo(vedio,image);
+    disp(strcat('fire',int2str(i),'写入视频.'));
+    end
+    close(vedio);
+
+end
+
+
+
+
+if 0
+for i=1:num
+   
+        image=imread(strcat('../data/fire6/fire',int2str(i),'.bmp'));
+        image=~image;
+        
+        image_txt=strcat('../data/m2c/m2c',int2str(i),'.txt');%为 txt 文件去名字
+        fid=fopen(image_txt,'w');
+        fprintf(fid,'%d ',image);
+        fclose(fid);
+        
+        %imwrite(image,strcat('fire',int2str(i),'.jpg'));
+        disp(strcat('fire',int2str(i),'转换结束.'));
+        
+        
+end
+disp('批量转换结束.');
+
+
+
+
+
+
+%以下为转换成视频的代码
+
+
+if 0
+vedio = VideoWriter('demo3.avi'); %初始化一个avi文件 
+vedio.FrameRate = 50;
+open(vedio); 
+for i=1:num %图像序列个数
+fname=strcat('fire',num2str(i,'%d'),'.jpg'); 
+frame = imread(fname); 
+
+writeVideo(vedio,frame);
+disp(strcat('fire',int2str(i),'写入视频.'));
+
+end
+close(vedio);
+end
+end
+
+
+
+%一下为图像处理后的视频合成
+if 0
+vedio = VideoWriter('../data/videos/demo.avi'); %初始化一个avi文件 
+vedio.FrameRate = 50;
+open(vedio); 
+
+for i=1:num
+    image=load(strcat('../data/c2m/c2m',int2str(i),'.txt'));
+    image=uint8(image);
+    %imshow(image);
+    imwrite(image,strcat('../data/jpg/',int2str(i),'.png'));
+%     fname=strcat('../data/jpg/',num2str(i,'%d'),'.png');
+%     frame = imread(fname);
+    writeVideo(vedio,image);
+    disp(strcat('fire',int2str(i),'写入视频.'));
+end
+close(vedio);
+end
+
+
+##### SOURCE END #####
+--></body></html>
