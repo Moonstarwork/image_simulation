@@ -1,10 +1,10 @@
 
 clc;
 clear all;
-num=15;
+num=1;
 
-
-if 0
+%以下为图像矫正变换后的程序
+if 1
     
     vedio = VideoWriter('../../data/videos/demo.avi'); %初始化一个avi文件
     vedio.FrameRate = 50;
@@ -72,7 +72,7 @@ end
 
 
 %一下为图像处理后的视频合成
-if 1
+if 0
     vedio = VideoWriter('../../data/videos/demo.avi'); %初始化一个avi文件
     vedio.FrameRate = 50;
     open(vedio);
@@ -80,7 +80,7 @@ if 1
     for i=1:num
         image=load(strcat('../../data/c2m/c2m',int2str(i),'.txt'));
         image=uint8(image);
-        %imshow(image);
+        imshow(image);
         imwrite(image,strcat('../../data/jpg/',int2str(i),'.png'));
         %     fname=strcat('../../data/jpg/',num2str(i,'%d'),'.png');
         %     frame = imread(fname);

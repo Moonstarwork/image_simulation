@@ -96,6 +96,8 @@ void trans(void)
 			t_origin[num][0] = i;
 			t_origin[num][1] = j;
 			t_origin[num][2] = 1;
+
+
 			for (size_t k = 0; k < 3; k++)
 			{
 				
@@ -104,12 +106,15 @@ void trans(void)
 					t[num][k] = t[num][k] + t_origin[num][l] * transfer[l][k];
 				}
 				
-			}
+			}//矩阵运算
+
+
+
 			for (size_t k = 0; k < 3; k++)
 			{
 				t[num][k] = t[num][k] / t[num][2];
 				t[num][k] *= times;
-			}
+			}//归一化
 
 
 
@@ -135,7 +140,7 @@ void trans_output(int order)
 {
 	int i, j;
 	FILE *f_write;
-	char out_name[30];
+	char out_name[100];
 	sprintf(out_name, "../../data/trans_txt/%d.txt", order);
 	f_write = fopen(out_name, "w");
 
@@ -165,7 +170,7 @@ void trans_output(int order)
 void image_processing(int order)
 {
 
-	int i=0,j=0;
+	int i=0,j=0,k=0,l=0;
 	int x, y;
 	int x0, y0;
 	long double xx, yy,xx0,yy0,ww;
@@ -175,16 +180,22 @@ void image_processing(int order)
 	}
 
 	printf("sdfaadsfs%d \n",point_num);
+
+#if 0
+
 	for (size_t i = 0; i <point_num ; i++)
 	{
 		x = img_transfor[i][0]+ distance_x*times;
 		y = img_transfor[i][1]+ distance_y*times;
-		x0 = img_transfor[i][2];
-		y0 = img_transfor[i][3];
+		x0 = img_transfor[i][2];//原来图像上的x0
+		y0 = img_transfor[i][3];//原来图像上的y0
 		img_t[x][y] = img_origin[x0][y0];
+		
 	}
+	trans_output(order);
+#endif
 
-#if 0
+#if 0 //有问题的代码，之后可能尝试修复
 
 	
 	for (size_t i = 0; i < height; i++)
@@ -196,8 +207,8 @@ void image_processing(int order)
 			xx = i- distance_x*times;//怎么把对应的 原来的x，y求出来；
 			yy = j- distance_y*times;
 			
-			xx = xx/ times;
-			yy = yy / times;
+			xx = xx/(times*1.0);
+			yy = yy/(times*1.0);
 
 
 			xx0 = xx*Tinv[0][0] + yy*Tinv[1][0] + 1 * Tinv[2][0];
@@ -211,17 +222,25 @@ void image_processing(int order)
 			
 			if ((x >= 0) && (x <240) && (y >= 0) && (y <320))
 			{
-				printf("%d %d %d %d\n", x, y,i,j);
+				//printf("%d %d %d %d\n", x, y,i,j);
 				img_t[i][j] = img_origin[x][y];
+				Tinv_trans_img[i][j]= img_origin[x][y];
+
 			}
 			else
 			{
 				img_t[i][j] = 127;//无数据的地方
+				Tinv_trans_img[i][j]=127;
+
 			}
+			//printf("%d %d %d %d %d\n", x, y,i,j,Tinv_trans_img[i][j]);
+			
 		}
 	}
-
+	Tinv_trans_out(order);//输出矫正图片
 #endif
 
-	trans_output(order);
+	Tinv_trans(order);//与之上的程序不可同时开否则txt文件出现冲突
+
+
 }
